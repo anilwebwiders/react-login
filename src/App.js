@@ -1,24 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import {Routes ,Route } from 'react-router-dom';
 
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Profile from './components/Profile'
+import { useDispatch, useSelector } from 'react-redux';
+import { checkLoginExist } from './api/Api'
+import { useEffect } from 'react';
 function App() {
+
+  const dispatch = useDispatch();
+  const checkLogin = async () =>{
+    await checkLoginExist(dispatch);
+  }
+
+  useEffect(()=>{
+    checkLogin();
+  },[]);
+
+  
+
+
+
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Routes>
+      
+        <Route path='/edit-profile' element={<Profile/>}/>
+        <Route path='/' element={<Login />} />
+        
+        <Route path='/sign-in' element={<Login />} />
+        
+        <Route path='/sign-up' element={<Signup />} />
+      
+    </Routes>
+    
+    </>
   );
 }
 
